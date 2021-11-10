@@ -111,4 +111,20 @@ public class PlayerBehaviour : MonoBehaviour
         Gizmos.DrawWireSphere(groundOrigin.position, groundRadius);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Plataform"))
+        {
+            transform.SetParent(collision.transform);
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Plataform"))
+        {
+            transform.SetParent(null);
+        }
+    }
+
 }
