@@ -9,6 +9,7 @@ public class EnemyBehavior : MonoBehaviour
     public Transform lookAhead;
     public Transform lookForward;
     public LayerMask groundLayerMask;
+    public LayerMask wallLayerMask;
     public bool isGroundAhead;
 
     private Rigidbody2D rigidbody;
@@ -22,6 +23,7 @@ public class EnemyBehavior : MonoBehaviour
     void Update()
     {
         LookAhead();
+        LookForward();
         MoveEnemy();
     }
 
@@ -31,6 +33,14 @@ public class EnemyBehavior : MonoBehaviour
         isGroundAhead = hit;
     }
 
+    private void LookForward()
+    {
+        var hit = Physics2D.Linecast(transform.position, lookForward.position, wallLayerMask);
+        if (hit)
+        {
+            Flip();
+        }
+    }
     private void MoveEnemy()
     {
         if (isGroundAhead)
