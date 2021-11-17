@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
+    [Header("Touch Input")]
+    public Joystick joystick;
+    [Range(0.1f, 0.9f)]
+    public float sensitivity;
+
     [Header("Movement")] 
     public float horizontalForce;
     public float verticalForce;
@@ -33,13 +38,13 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Move()
     {
-        float x = Input.GetAxisRaw("Horizontal");  
+        float x = (Input.GetAxisRaw("Horizontal") + joystick.Horizontal) * sensitivity;  
 
         if (isGrounded)
         {
             // Keyboard Input
-            float y = Input.GetAxisRaw("Vertical");
-            float jump = Input.GetAxisRaw("Jump");
+            float y = (Input.GetAxisRaw("Vertical") + joystick.Vertical) * sensitivity;
+            float jump = Input.GetAxisRaw("Jump") + ((UIController.jumpButtonDown) ? 1.0f : 0.0f);
 
             // Check for Flip
 
